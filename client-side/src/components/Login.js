@@ -1,9 +1,20 @@
-import React from 'react'
 import pinterestbg from '../assets/videos/pinterest-bg-video.mp4'
 import GoogleLogin from "react-google-login"
 import { FcGoogle } from "react-icons/fc"
+import React, { useEffect } from "react";
+import { gapi } from "gapi-script";
 
 const Login = () => {
+
+    useEffect(() => {
+        //initiates Google Oauth setup
+        gapi.load("client:auth2", () => {
+          gapi.client.init({
+            clientId: process.env.REACT_APP_GOOGLE_API_TOKEN,
+            scope: "profile",
+          });
+        });
+      }, []);
 
     const responseGoogle = (response) => {
         console.log(response);
@@ -29,7 +40,7 @@ const Login = () => {
                     render={(renderProps) => (
                         <button
                         type="button"
-                        className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
+                        className="bg-cyan-200 flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
                         onClick={renderProps.onClick}
                         disabled={renderProps.disabled}
                         >
